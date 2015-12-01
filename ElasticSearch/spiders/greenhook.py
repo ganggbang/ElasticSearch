@@ -50,6 +50,33 @@ class GreenhookSpider(CrawlSpider):
         company_Fax = self.check_item(div,'div/div/span[@id=\'rptCompanyDetails_2_ctl00_pnlFax\']/a/span[@class=\'faxNum\']/text()')
         website = self.check_item(div,'//a[@class=\'website\']/@href')
         #website = div.xpath('//a[@class=\'website\']/@href').extract()
+
+        #div id="productServices"
+
+        product_service = sel.xpath('//div[@id=\'productServices\']/div[@class=\"content\"]/h3/a/text()').extract()
+        product_service = [re.sub('\s{2,}', '',s) for s in product_service]
+
+        #<div id="brandName" class="sectionWrapper">
+        brands = sel.xpath('//div[@id=\'brandName\']/div[@class=\"content\"]/p/span/a/text()').extract()
+        brands = [re.sub('\s{2,}', '',s) for s in brands]
+
+        #<div id="companyInformation"
+        profile = sel.xpath('//div[@id=\'companyInformation\']/div[@class=\"content\"]/div/div[@class=\"profile\"]').extract()
+        profile = [re.sub('<.*?>|\ {2,}|\r\n{2,}', '',s) for s in profile]
+
+
+        other_info = sel.xpath('//div[@class=\"othersInformation\"]/p').extract()
+        other_info = [re.sub('<.*?>|\ {2,}|\r\n{2,}', '',s) for s in other_info]
+        print other_info
+
+
+        #<div id="divComLogo" class="logo
+        logo = sel.xpath('//img[@id=\"imgComLogo\"]/@src').extract()
+        print logo
+
+        print profile
+        #print product_service
+        #print brands
         
         print company_name
         print company_address
